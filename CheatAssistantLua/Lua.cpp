@@ -151,9 +151,10 @@ int Lua::writeDouble(lua_State* m_L)
 int Lua::decrypt(lua_State* m_L)
 {
 	int address = (int)lua_tointeger(m_L,1);
+	int 解密基址 = (int)lua_tointeger(m_L, 2);
 	int eax, esi, edx, i;
 	eax = memory.read<int>(address);
-	esi = memory.read<int>(0x057F8A18);
+	esi = memory.read<int>(解密基址);
 	edx = eax >> 16;
 	edx = memory.read<int>(esi + edx * 4 + 36);
 	eax = eax & 65535;

@@ -241,8 +241,11 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 				
 				return STATUS_UNSUCCESSFUL;
 			}
-
 			RtlCopyMemory(g_szTarWin10ImageFilePointerName, pFileObject->FileName.Buffer, pFileObject->FileName.Length);
+#ifdef DEBUG
+			//KCA: g_szTarWin10ImageFilePointerName \Windows\System32\svchost.exe
+			dprintf("g_szTarWin10ImageFilePointerName %ls", g_szTarWin10ImageFilePointerName);
+#endif // DEBUG
 		}
 
 		if ((NtBuildNumber & 0x0000FFFF) < 9600)
