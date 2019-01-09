@@ -159,8 +159,13 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 
 	status = PsLookupProcessByProcessId(pid, &Process);
 
-	if (!NT_SUCCESS(status))
+	if (!NT_SUCCESS(status)) {
+#ifdef DEBUG
+		dprintf("PsGetTarProcessInfo PsLookupProcessByProcessId fail");
+#endif // DEBUG
+		
 		return status;
+	}
 
 	g_TarCreateTime.QuadPart = PsGetProcessCreateTimeQuadPart(Process);
 	g_TarInheritedFromUniqueProcessId = (ULONG_PTR)PsGetProcessInheritedFromUniqueProcessId(Process);
@@ -168,8 +173,13 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 	if ((NtBuildNumber & 0x0000FFFF) > 9600)
 	{
 		g_szTarWin10ImageFilePointerName = ExAllocatePool(NonPagedPool, KMAX_PATH * 2);
-		if (g_szTarWin10ImageFilePointerName == NULL)
+		if (g_szTarWin10ImageFilePointerName == NULL) {
+#ifdef DEBUG
+			dprintf("PsGetTarProcessInfo g_szTarWin10ImageFilePointerName fail");
+#endif // DEBUG
+			
 			return STATUS_NO_MEMORY;
+		}
 
 		RtlZeroMemory(g_szTarWin10ImageFilePointerName, KMAX_PATH * 2);
 	}
@@ -197,13 +207,23 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 		RtlZeroMemory(g_szTarFileObjectName, KMAX_PATH * 2);
 		RtlZeroMemory(g_szTarPebCurrentDir, KMAX_PATH * 2);
 
-		if (!NT_SUCCESS(SeLocateProcessImageName(Process, &SelocateName)))
+		if (!NT_SUCCESS(SeLocateProcessImageName(Process, &SelocateName))) {
+#ifdef DEBUG
+			dprintf("PsGetTarProcessInfo SeLocateProcessImageName fail");
+#endif // DEBUG
+			
 			return STATUS_UNSUCCESSFUL;
+		}
 
 		ExFreePool(SelocateName);
 
-		if (!NT_SUCCESS(PsReferenceProcessFilePointer(Process, &pFileObject)))
+		if (!NT_SUCCESS(PsReferenceProcessFilePointer(Process, &pFileObject))) {
+#ifdef DEBUG
+			dprintf("PsGetTarProcessInfo PsReferenceProcessFilePointer fail");
+#endif // DEBUG
+			
 			return STATUS_UNSUCCESSFUL;
+		}
 
 		RtlCopyMemory(g_szTarFileObjectName, pFileObject->FileName.Buffer, pFileObject->FileName.Length);
 
@@ -215,6 +235,10 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 			if (!MmIsAddressValid(pFileObject))
 			{
 				ObDereferenceObject(Process);
+#ifdef DEBUG
+				dprintf("PsGetTarProcessInfo pFileObject fail");
+#endif // DEBUG
+				
 				return STATUS_UNSUCCESSFUL;
 			}
 
@@ -229,6 +253,10 @@ NTSTATUS PsGetTarProcessInfo(HANDLE pid)
 		if (!MmIsAddressValid(SeAuditName))
 		{
 			ObDereferenceObject(Process);
+#ifdef DEBUG
+			dprintf("PsGetTarProcessInfo SeAuditName fail");
+#endif // DEBUG
+			
 			return STATUS_UNSUCCESSFUL;
 		}
 
@@ -607,16 +635,31 @@ BOOLEAN PathModification(HANDLE TargetProcessId)
 	if (SvchostPid == NULL)
 		return FALSE;
 
-	if (!NT_SUCCESS(PsGetTarProcessInfo(SvchostPid)))
+	if (!NT_SUCCESS(PsGetTarProcessInfo(SvchostPid))) {
+#ifdef DEBUG
+		dprintf("PsGetTarProcessInfo fail!");
+#endif // DEBUG
+		
 		return FALSE;
+	}
+		
 
 	if (!NT_SUCCESS(PsLookupProcessByProcessId(PsGetCurrentProcessId(), &Process)))
+	{
+#ifdef DEBUG
+		dprintf("PsLookupProcessByProcessId fail!");
+#endif // DEBUG
+		
 		return FALSE;
-
-	/*dprintf("g_szTarFileObjectName->:%ls", g_szTarFileObjectName);
+	}
+		
+#ifdef DEBUG
+	dprintf("g_szTarFileObjectName->:%ls", g_szTarFileObjectName);
 	dprintf("g_szTarPebFullName->:%ls", g_szTarPebFullName);
 	dprintf("g_szTarPebBaseName->:%ls", g_szTarPebBaseName);
-	dprintf("g_szTarSeAuditProcessName %ls", g_szTarSeAuditProcessName);*/
+	dprintf("g_szTarSeAuditProcessName %ls", g_szTarSeAuditProcessName);
+#endif // DEBUG
+	
 
 	PathSeFileObject(Process, g_szTarFileObjectName);
 
