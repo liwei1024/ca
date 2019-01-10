@@ -7,7 +7,7 @@
 
 #ifndef DRIVER_CONTROL_H
 #include "../driver_control/drictl.h"
-#pragma comment(lib,"../x64/Release/library/driver_control.lib")
+#pragma comment(lib,"driver_control.lib")
 #endif // !DRIVER_CONTROL_H
 
 #include "../VMProtectSDK.h"

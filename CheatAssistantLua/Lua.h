@@ -4,7 +4,7 @@ extern "C" {
 #include "../lua53/lua.h"
 #include "../lua53/lualib.h"  
 #include "../lua53/lauxlib.h" 
-#pragma comment(lib,"../x64/Release/library/lua53.lib")
+#pragma comment(lib,"lua53.lib")
 
 }
 #else  

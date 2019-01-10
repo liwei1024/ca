@@ -296,7 +296,7 @@ void fun::chooseTheAppropriateMap(int taskId)
 }
 
 bool fun::exception(int exceptionCode) {
-	
+	return false;
 }
 
 bool fun::passStoryFrame() {

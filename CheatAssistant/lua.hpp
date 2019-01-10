@@ -5,19 +5,19 @@ extern "C" {
 #include "../lua53/lua.h"
 #include "../lua53/lualib.h"  
 #include "../lua53/lauxlib.h" 
-#pragma comment(lib,"../x64/Release/library/lua53.lib")
+#pragma comment(lib,"lua53.lib")
 
 }
 #else  
 #include "../lua53/lua.hpp"
 #include "../lua53/lualib.h"  
 #include "../lua53/lauxlib.h"  
-#pragma comment(lib,"../x64/Release/library/lua53.lib")
+#pragma comment(lib,"lua53.lib")
 #endif
 
 #ifndef __UTILS_H__
 #include "../utils/utils.h"
-#pragma comment(lib,"../x64/Release/library/utils.lib")
+#pragma comment(lib,"utils.lib")
 #endif // !__UTILS_H__
 
 

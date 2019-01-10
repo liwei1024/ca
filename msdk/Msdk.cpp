@@ -1,26 +1,16 @@
 #include "msdk.h"
 
-#ifdef _WIN64
+
 #ifndef __UTILS_H__
 #include "../utils/utils.h"
-#pragma comment(lib,"../x64/Release/library/utils.lib")
+#pragma comment(lib,"utils.lib")
 #endif
 
 #ifndef __MEMORY_LOADER_H__
 #include "../memory_loader/memory_loader.h"
-#pragma comment(lib,"../x64/Release/library/memory_loader.lib")
+#pragma comment(lib,"memory_loader.lib")
 #endif // !__MEMORY_LOADER_H__
-#else _WIN64
-#ifndef __UTILS_H__
-#include "../utils/utils.h"
-#pragma comment(lib,"../Release/library/utils.lib")
-#endif
 
-#ifndef __MEMORY_LOADER_H__
-#include "../memory_loader/memory_loader.h"
-#pragma comment(lib,"../Release/library/memory_loader.lib")
-#endif // !__MEMORY_LOADER_H__
-#endif // WIN64
 
 M_OPEN_VIDPID M_Open_VidPid;
 M_RELEASEALLKEY M_ReleaseAllKey;
