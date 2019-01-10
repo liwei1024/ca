@@ -143,7 +143,7 @@ void Msdk::keyUp(int keyCode)
 	if (getKeyState(keyCode) == 1)
 	{
 		M_KeyUp2(msdk_handle, keyCode);
-		Sleep(50+ utils::createRandom(1, 10));
+		Sleep(100+ utils::createRandom(1, 10));
 		/*if (getKeyState(keyCode) == 0) {
 			M_KeyUp2(msdk_handle, keyCode);
 			Sleep(100);
