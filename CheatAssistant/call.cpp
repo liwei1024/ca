@@ -49,6 +49,14 @@ void call::技能Call(int pointer, int code, int damage, int x, int y, int z)
 
 }
 
+
+void 远程call(DWORD_PTR 参数) {
+	__asm {
+		mov eax, [ebp + 4]
+		mov eax, [ebp + 8]
+		...
+	}
+}
 /*
 __asm
 {
