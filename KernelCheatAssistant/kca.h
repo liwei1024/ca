@@ -3,6 +3,7 @@
 #include <ntdef.h>
 #include <ntifs.h>
 #include <ntddk.h>
+#include <ntstrsafe.h>
 #include "kca_api.h"
 //#define DEBUG
 #ifdef DEBUG
@@ -67,6 +68,12 @@ NTKERNELAPI NTSTATUS NTAPI ZwQueryInformationProcess(
 	_In_      ULONG            ProcessInformationLength,
 	_Out_opt_ PULONG           ReturnLength
 );
+
+//NTSTATUS RtlUnicodeStringInit(
+//	_Out_    PUNICODE_STRING  DestinationString,
+//	_In_opt_ NTSTRSAFE_PCWSTR pszSrc
+//);
+
 
 //device_control
 NTSTATUS KcaDispatchDeviceControl(

@@ -48,12 +48,18 @@
     <ClCompile Include="path_mod.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="handle_hide.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kca.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="kca_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handle_hide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
