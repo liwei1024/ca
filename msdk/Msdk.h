@@ -32,10 +32,10 @@ public:
 	void closeHandle();
 	void upAllKey();
 	int getKeyState(int keyCode);
-	void keyDown(int keyCode);
+	void keyDown(int keyCode, int s = 100);
 	void keyUp(int keyCode);
 	void doKeyPress(int keyCode, int s = 100);
-	void mouseClick();
+	void mouseClick(int s = 100);
 	void mouseDoubleClick(int s = 0);
 	void moveMousePos(int x, int y);
 	void setMousePos(int x, int y);

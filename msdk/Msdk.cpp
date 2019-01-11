@@ -111,12 +111,12 @@ int Msdk::getKeyState(int keyCode)
 	return keyState;
 }
 
-void Msdk::keyDown(int keyCode)
+void Msdk::keyDown(int keyCode, int s)
 {
 	if (getKeyState(keyCode) == 0)
 	{
 		M_KeyDown2(msdk_handle, keyCode);
-		Sleep(105 + utils::createRandom(1, 10));
+		Sleep(s);
 		/*if (getKeyState(keyCode) == 1)
 		{
 			M_KeyDown2(msdk_handle, keyCode);
@@ -145,14 +145,13 @@ void Msdk::keyUp(int keyCode)
 }
 void Msdk::doKeyPress(int keyCode, int s)
 {
-	keyDown(keyCode);
-	Sleep(s + utils::createRandom(1, 10));
+	keyDown(keyCode,s + utils::createRandom(1, 10));
 	keyUp(keyCode);
 }
-void Msdk::mouseClick()
+void Msdk::mouseClick(int s)
 {
 	M_LeftClick(msdk_handle, 1);
-	Sleep(100);
+	Sleep(s);
 }
 void Msdk::mouseDoubleClick(int s)
 {
