@@ -262,7 +262,7 @@ NTSTATUS KcaReadVirtualMemory(
 	SIZE_T Bytes;
 	if (g_TargetProcessInfo.ProcessStatus == TRUE)
 	{
-		Status = MmCopyVirtualMemory(g_TargetProcessInfo.Process, (CONST PVOID)rvms->Address, PsGetCurrentProcess(), (SIZE_T)rvms->Response, rvms->Size, KernelMode, &Bytes);
+		Status = MmCopyVirtualMemory(g_TargetProcessInfo.Process, (CONST PVOID)rvms->Address, PsGetCurrentProcess(), rvms->Response, (SIZE_T)rvms->Size, KernelMode, &Bytes);
 	}
 	return Status;
 
