@@ -80,7 +80,7 @@ void Msdk::openHandle()
 {
 	if (msdk_handle == NULL)
 	{
-		msdk_handle = M_Open_VidPid(0xc310, 0xc007);
+		msdk_handle = M_Open_VidPid(0xc110, 0xc107);
 		if (msdk_handle == INVALID_HANDLE_VALUE) {
 			printf(VMProtectDecryptStringA("msdk ´ò¿ªÊ§°Ü\n"));
 		}

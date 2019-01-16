@@ -21,6 +21,7 @@ void Lua::registers(lua_State* m_L)
 	lua_register(m_L, "readByte", readByte); // 
 	lua_register(m_L, "readShort", readShort); // 
 	lua_register(m_L, "readInteger", readInteger); // 
+	lua_register(m_L, "readLong", readLong); // 
 	lua_register(m_L, "readFloat", readFloat); // 
 	lua_register(m_L, "readDouble", readDouble); // 
 	lua_register(m_L, "readString", readString); // 
