@@ -34,7 +34,7 @@ extern NTKERNELAPI ULONG NtBuildNumber;//ÏµÍ³°æ±¾ºÅ
 extern HANDLE g_SelfProcessId;
 
 // system
-NTSTATUS NTAPI MmCopyVirtualMemory
+NTKERNELAPI NTSTATUS  MmCopyVirtualMemory
 (
 	PEPROCESS SourceProcess,
 	CONST VOID * SourceAddress,
