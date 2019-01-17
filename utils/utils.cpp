@@ -125,7 +125,7 @@ void utils::windowInitialize()
 	//MoveWindow(g_self_window_handle, cx - width, cy - height, 400, 800, TRUE);
 
 	//EnableMenuItem(GetSystemMenu(g_self_window_handle, FALSE), SC_CLOSE, MF_GRAYED);
-	SetConsoleTitle(VMProtectDecryptStringW(L""));
+	//SetConsoleTitle(VMProtectDecryptStringW(L""));
 	//SetLayeredWindowAttributes(g_self_window_handle, 0, 200, 3);//Õ∏√˜∂»…Ë÷√
 	/*SetWindowLong(g_self_window_handle, GWL_STYLE, GetWindowLong(g_self_window_handle, GWL_STYLE) & ~WS_CAPTION);
 	SetWindowPos(g_self_window_handle, NULL, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_DRAWFRAME);*/

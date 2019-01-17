@@ -23,7 +23,7 @@
     <ProjectGuid>{FE796201-CC9B-4AAE-BD1C-2ECAD299B523}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>sendinput</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>winApiKeyEvent</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
