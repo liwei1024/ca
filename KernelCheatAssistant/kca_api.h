@@ -5,10 +5,10 @@
 //#define TARGET_PROCESS_NAME L"YoudaoDict.exe"
 //#define TARGET_PROCESS_FILE_NAME L"YoudaoDict.exe"
 //#define TARGET_PROCESS_NAME L"cheatengine-x86_64.exe"
-#define DRIVER_FILE_NAME L"kca.sys"
-#define DEVICE_SHOST_NAME L"kca"
+#define DRIVER_FILE_NAME L"ca.sys"
+#define DEVICE_SHOST_NAME L"ca"
 #define DEVICE_NAME (L"\\Device\\" DEVICE_SHOST_NAME)
-#define SYMBOLIC_LINK_SHORT_NAME L"kca"
+#define SYMBOLIC_LINK_SHORT_NAME L"ca"
 #define SYMBOLIC_LINK_NAME (L"\\DosDevices\\" SYMBOLIC_LINK_SHORT_NAME)
 
 

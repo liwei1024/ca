@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="close_file_handle.h" />
     <ClInclude Include="Lua.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

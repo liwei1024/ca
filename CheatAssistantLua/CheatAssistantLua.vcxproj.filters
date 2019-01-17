@@ -21,6 +21,9 @@
     <ClInclude Include="Lua.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="close_file_handle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

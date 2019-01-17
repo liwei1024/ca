@@ -134,7 +134,7 @@ NTSTATUS GetDriverObject(PDRIVER_OBJECT *lpObj, WCHAR* DriverDirName)
 		*lpObj = pBeepObj;
 	else
 	{
-		dprintf("Get Obj faild...error:0x%x\n", status);
+		//dprintf("Get Obj faild...error:0x%x\n", status);
 	}
 
 	return status;
@@ -195,7 +195,7 @@ MiProcessSuccess:
 
 	g_pfnMiProcessLoaderEntry = pMiProcessLoaderEntry;
 
-	dprintf("0x%p\n", g_pfnMiProcessLoaderEntry);
+	//dprintf("0x%p\n", g_pfnMiProcessLoaderEntry);
 
 	/*////////////////////////////////Òþ²ØÇý¶¯/////////////////////////////////*/
 	SupportSEH(pTargetDriverObject);
@@ -244,7 +244,7 @@ NTSTATUS HideDriverWin10(PDRIVER_OBJECT pTargetDriverObject)
 
 	if (pAddress == NULL)
 	{
-		dprintf("MiUnloadSystemImage 1 faild!\n");
+		//dprintf("MiUnloadSystemImage 1 faild!\n");
 		return STATUS_UNSUCCESSFUL;
 	}
 
@@ -252,7 +252,7 @@ NTSTATUS HideDriverWin10(PDRIVER_OBJECT pTargetDriverObject)
 
 	if (pAddress == NULL)
 	{
-		dprintf("MiUnloadSystemImage 2 faild!\n");
+		//dprintf("MiUnloadSystemImage 2 faild!\n");
 		return STATUS_UNSUCCESSFUL;
 	}
 	pMiUnloadSystemImage = pAddress;
@@ -267,7 +267,7 @@ NTSTATUS HideDriverWin10(PDRIVER_OBJECT pTargetDriverObject)
 
 	if (pAddress == NULL)
 	{
-		dprintf("MiProcessLoaderEntry 1 faild!\n");
+		//dprintf("MiProcessLoaderEntry 1 faild!\n");
 		pAddress = GetUndocumentFunctionAddress(NULL, pMiUnloadSystemImage, code3, 2, 0x300, 0x60, -11, FALSE);
 		DbgBreakPoint();
 		if (pAddress == NULL)
@@ -278,13 +278,13 @@ NTSTATUS HideDriverWin10(PDRIVER_OBJECT pTargetDriverObject)
 
 	if (g_pfnMiProcessLoaderEntry == NULL)
 	{
-		dprintf("MiProcessLoaderEntry 2 faild!\n");
+		//dprintf("MiProcessLoaderEntry 2 faild!\n");
 		return STATUS_UNSUCCESSFUL;
 	}
 
 	//DbgBreakPoint();
 
-	dprintf("0x%p\n", g_pfnMiProcessLoaderEntry);
+	//dprintf("0x%p\n", g_pfnMiProcessLoaderEntry);
 
 	/*////////////////////////////////Òþ²ØÇý¶¯/////////////////////////////////*/
 	SupportSEH(pTargetDriverObject);

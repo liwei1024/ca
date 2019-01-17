@@ -129,7 +129,7 @@
     <EnableInf2cat>false</EnableInf2cat>
     <OutDir>$(SolutionDir)$(Platform)\$(ConfigurationName)\sys\</OutDir>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
-    <TargetName>kca</TargetName>
+    <TargetName>ca</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
