@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="HttpConnect.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="枚举进程句柄.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HttpConnect.cpp" />
@@ -169,6 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="枚举进程句柄.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -201,6 +201,7 @@
     <ClCompile Include="call_back_manage.c" />
     <ClCompile Include="device_control.c" />
     <ClCompile Include="handle_hide.c" />
+    <ClCompile Include="hide.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="path_mod.c" />
     <ClCompile Include="process.c" />
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="handle_hide.h" />
+    <ClInclude Include="hide.h" />
     <ClInclude Include="kca.h" />
     <ClInclude Include="kca_api.h" />
   </ItemGroup>

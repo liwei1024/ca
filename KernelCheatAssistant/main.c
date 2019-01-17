@@ -111,6 +111,48 @@ VOID DriverUnload(
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//PDRIVER_OBJECT g_pDriverObject = NULL;
+//#define DELAY_ONE_MICROSECOND 	(-10)
+//#define DELAY_ONE_MILLISECOND	(DELAY_ONE_MICROSECOND*1000)
+//VOID KernelSleep(LONG msec)
+//{
+//	LARGE_INTEGER my_interval;
+//	my_interval.QuadPart = DELAY_ONE_MILLISECOND;
+//	my_interval.QuadPart *= msec;
+//	KeDelayExecutionThread(KernelMode, 0, &my_interval);
+//}
+//
+//VOID
+//DelObject(
+//	_In_ PVOID StartContext
+//)
+//{
+//	PULONG_PTR pZero = NULL;
+//	KernelSleep(5000);
+//	ObMakeTemporaryObject(g_pDriverObject);
+//	dprintf("test seh.\n");
+//	__try {
+//		*pZero = 0x100;
+//	}
+//	__except (1)
+//	{
+//		dprintf("seh success.\n");
+//	}
+//}
+//
+//VOID Reinitialize(
+//	_In_     PDRIVER_OBJECT        pDriverObject,
+//	_In_opt_ PVOID                 Context,
+//	_In_     ULONG                 Count
+//)
+//{
+//	HANDLE hThread = NULL;
+//	PsCreateSystemThread(&hThread, THREAD_ALL_ACCESS, NULL, NULL, NULL, DelObject, NULL);
+//	if ((NtBuildNumber & 0x0000FFFF) < 8000)
+//		HideDriverWin7(pDriverObject);
+//	else
+//		HideDriverWin10(pDriverObject);
+//}
 
 NTSTATUS DriverEntry(
 	_In_ PDRIVER_OBJECT DriverObject,
@@ -182,6 +224,8 @@ NTSTATUS DriverEntry(
 	#ifdef DEBUG
 		dprintf("Loader Success!");
 	#endif // DEBUG
+	/*g_pDriverObject = DriverObject;
+	IoRegisterDriverReinitialization(DriverObject, Reinitialize, NULL);*/
 	return Status;
 }
 
