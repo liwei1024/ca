@@ -55,7 +55,7 @@ void HttpConnect::socketHttp(string host, string request)
 	close(sockfd);
 #endif
 	buf[offset] = 0;
-std:cout << buf << endl;
+	cout << buf << endl;
 }
 void HttpConnect::postData(string host, string path, string post_content)
 {
