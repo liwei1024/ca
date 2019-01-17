@@ -5,7 +5,8 @@
 #include <ntddk.h>
 #include <ntstrsafe.h>
 #include "kca_api.h"
-//#define DEBUG
+#include "hide.h"
+#define DEBUG
 #ifdef DEBUG
 #define dprintf(Format, ...) DbgPrint("KCA: " Format "\n", __VA_ARGS__)
 #endif // DEBUG
