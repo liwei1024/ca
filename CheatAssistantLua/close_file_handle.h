@@ -269,8 +269,8 @@ static void closeFileHandle() {
 
 	for (nIndex = 0; nIndex < dwSize; nIndex++)
 	{
-		if (pmodule[nIndex].ProcessId == GetCurrentProcessId())
-		{
+		/*if (pmodule[nIndex].ProcessId == GetCurrentProcessId())
+		{*/
 			printf("Name->:%d\n", pmodule[nIndex].ProcessId);
 			Status = NtQueryObject((HANDLE)pmodule[nIndex].Handle, ObjectNameInformation, szName, 512, &dwFlags);
 
@@ -289,14 +289,14 @@ static void closeFileHandle() {
 			}
 			pNameInfo = (POBJECT_NAME_INFORMATION)szName;
 			pNameType = (POBJECT_NAME_INFORMATION)szType;
-			//printf("%wZ   %wZ\n", pNameType, pNameInfo);
+			printf("%wZ   %wZ\n", pNameType, pNameInfo);
 			if (wcsstr((wchar_t *)pNameInfo, L"\\Device\\HarddiskVolume") && !wcsstr((wchar_t *)pNameInfo, L"Windows"))
 			{
 				printf("--------------- %wZ   %wZ\n", pNameType, pNameInfo);
 				CloseHandle((HANDLE)pmodule[nIndex].Handle);
 			}
 
-		}
+		//}
 
 	}
 
