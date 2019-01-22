@@ -3,6 +3,10 @@
 #include <windows.h>
 #include <psapi.h>
 #include <TlHelp32.h>
+#ifndef KCA_API_H
+#include "../KernelCheatAssistant/kca_api.h"
+#endif // !KCA_API_H
+
 class Kca
 {
 private:
@@ -15,6 +19,12 @@ public:
 	//DWORD dwProcessBaseAddress;
 	void Init();
 	void closeHandle();
+	BOOL setProtection(
+		DWORD pid,
+		PolicyOpt protection,
+		PolicyOpt dynamicCode = Policy_Keep,
+		PolicyOpt binarySignature = Policy_Keep
+	);
 	ULONG getProcessId();
 	BOOL protectCurrentProcess(BOOLEAN enable);
 	BOOL modifyCurrentProcessPath(ULONG ProcessId);

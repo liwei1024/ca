@@ -205,6 +205,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="path_mod.c" />
     <ClCompile Include="process.c" />
+    <ClCompile Include="set_protection.c" />
     <ClCompile Include="thread.c" />
     <ClCompile Include="utils.c" />
     <ClCompile Include="virtual_memory.c" />
@@ -214,6 +215,7 @@
     <ClInclude Include="hide.h" />
     <ClInclude Include="kca.h" />
     <ClInclude Include="kca_api.h" />
+    <ClInclude Include="set_protection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

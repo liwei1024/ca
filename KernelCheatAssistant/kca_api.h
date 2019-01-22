@@ -23,6 +23,7 @@
 #define KCA_PROTECT_CURRENT_PROCESS_FILE KCTL_CODE(7)
 #define KCA_UN_PROTECT_CURRENT_PROCESS_FILE KCTL_CODE(8)
 #define KCA_MODIFY_CURRENT_PROCESS_PATH KCTL_CODE(9)
+//#define KCA_SET_PROTECTION KCTL_CODE(10)
 
 typedef struct _KCA_REMOTE_CALL_STRUCT {
 	IN HANDLE Process;
@@ -49,6 +50,27 @@ typedef struct _WRITE_VIRTUAL_MEMORY_STRUCT
 	ULONG64 Size;
 
 }KCA_WRITE_VIRTUAL_MEMORY_STRUCT, *PKCA_WRITE_VIRTUAL_MEMORY_STRUCT;
+
+///// <summary>
+///// Policy activation option
+///// </summary>
+//typedef enum _PolicyOpt
+//{
+//	Policy_Disable,
+//	Policy_Enable,
+//	Policy_Keep,        // Don't change current value
+//} PolicyOpt;
+//
+///// <summary>
+///// Input for IOCTL_BLACKBONE_SET_PROTECTION
+///// </summary>
+//typedef struct _SET_PROC_PROTECTION
+//{
+//	ULONG pid;              // Process ID
+//	PolicyOpt protection;   // Process protection
+//	PolicyOpt dynamicCode;  // DynamiCode policy
+//	PolicyOpt signature;    // BinarySignature policy
+//} SET_PROC_PROTECTION, *PSET_PROC_PROTECTION;
 
 #endif // !KCA_API_H
 
