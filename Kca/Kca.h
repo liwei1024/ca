@@ -19,12 +19,12 @@ public:
 	//DWORD dwProcessBaseAddress;
 	void Init();
 	void closeHandle();
-	BOOL setProtection(
+	/*BOOL setProtection(
 		DWORD pid,
 		PolicyOpt protection,
 		PolicyOpt dynamicCode = Policy_Keep,
 		PolicyOpt binarySignature = Policy_Keep
-	);
+	);*/
 	ULONG getProcessId();
 	BOOL protectCurrentProcess(BOOLEAN enable);
 	BOOL modifyCurrentProcessPath(ULONG ProcessId);
