@@ -4,6 +4,7 @@
 #include <ntifs.h>
 #include <ntddk.h>
 #include <ntstrsafe.h>
+#include <wdm.h>
 #include "kca_api.h"
 #include "hide.h"
 #define TARGET_PROCESS_FILE_NAME L"DNF.exe"

@@ -163,6 +163,7 @@ NTSTATUS DriverEntry(
 	PDEVICE_OBJECT DeviceObject;
 	UNICODE_STRING DeviceName;
 	//PLDR_DATA_TABLE_ENTRY64 ldr;
+	UNREFERENCED_PARAMETER(RegistryPath);
 
 	DriverObject->DriverUnload = DriverUnload;
 
