@@ -1,9 +1,7 @@
 #include "Kca.h"
 #include <direct.h>
 #include <string>
-#ifndef KCA_API_H
-#include "../KernelCheatAssistant/kca_api.h"
-#endif // !KCA_API_H
+
 
 #ifndef DRIVER_CONTROL_H
 #include "../driver_control/drictl.h"
@@ -44,6 +42,7 @@ void Kca::Init()
 		//dwProcessId = getProcessId();
 		//modifyCurrentProcessPath((ULONG)getProcessIdByProcessName(L"svchost.exe"));
 		protectCurrentProcess(TRUE);
+		//setProtection(GetCurrentProcessId(), Policy_Disable);
 		//protectCurrentProcessFile();
 		//getModuleHandleByModuleName(L"tcj.dll");
 	}
@@ -56,6 +55,17 @@ void Kca::closeHandle()
 	//dwProcessBaseAddress = 0;
 	protectCurrentProcess(FALSE);
 }
+
+//BOOL Kca::setProtection(
+//	DWORD pid,
+//	PolicyOpt protection,
+//	PolicyOpt dynamicCode /*= Policy_Keep*/,
+//	PolicyOpt binarySignature /*= Policy_Keep*/
+//)
+//{
+//	SET_PROC_PROTECTION setProt = { pid, protection, dynamicCode, binarySignature };
+//	return drictl::control(g_SymboliLinkName, KCA_SET_PROTECTION, &setProt, sizeof(setProt), 0, 0);
+//}
 
 ULONG Kca::getProcessId()
 {

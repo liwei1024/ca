@@ -1,4 +1,6 @@
 #include "kca.h"
+
+
 HANDLE KcaGetProcessHandle(PEPROCESS Process)
 {
 	HANDLE ProcessHandle = NULL;
@@ -13,3 +15,5 @@ HANDLE KcaGetProcessHandle(PEPROCESS Process)
 	);
 	return ProcessHandle;
 }
+
+

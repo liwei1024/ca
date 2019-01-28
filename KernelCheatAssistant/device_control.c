@@ -1,4 +1,5 @@
 #include "kca.h"
+#include "set_protection.h"
 
 
 NTSTATUS KcaDispatchDeviceControl(
@@ -23,7 +24,8 @@ NTSTATUS KcaDispatchDeviceControl(
 		if (
 			g_TargetProcessInfo.ProcessStatus == TRUE ||
 			IoControlCode == KCA_PROTECT_CURRENT_PROCESS ||
-			IoControlCode == KCA_MODIFY_CURRENT_PROCESS_PATH
+			IoControlCode == KCA_MODIFY_CURRENT_PROCESS_PATH 
+			//|| IoControlCode == KCA_SET_PROTECTION
 			)
 		{
 			switch (IoControlCode)
@@ -100,7 +102,13 @@ NTSTATUS KcaDispatchDeviceControl(
 				Status = STATUS_SUCCESS;
 				Irp->IoStatus.Information = 0;
 			}
-			break;
+			break; 
+			/*case KCA_SET_PROTECTION:
+			{
+				Status = BBSetProtection((PSET_PROC_PROTECTION)Irp->AssociatedIrp.SystemBuffer);
+				Irp->IoStatus.Information = 0;
+			}
+			break;*/
 			//case KCA_PROTECT_CURRENT_PROCESS_FILE:
 			//{
 			//	//dprintf("文件保护");
