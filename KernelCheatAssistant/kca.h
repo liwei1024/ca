@@ -6,6 +6,8 @@
 #include <ntstrsafe.h>
 #include "kca_api.h"
 #include "hide.h"
+#define TARGET_PROCESS_FILE_NAME L"DNF.exe"
+#define TARGET_PROCESS_NAME L"dnf.exe"
 //#define DEBUG
 #ifdef DEBUG
 #define dprintf(Format, ...) DbgPrint("KCA: " Format "\n", __VA_ARGS__)

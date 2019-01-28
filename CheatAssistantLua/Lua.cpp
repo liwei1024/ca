@@ -18,43 +18,43 @@ void Lua::registers(lua_State* m_L)
 	/*lua_pushcfunction(m_L, getForegroundWindow);
 	lua_setglobal(m_L,"getForegroundWindow");*/
 	// memory
-	lua_register(m_L, "readByte", readByte); // 
-	lua_register(m_L, "readShort", readShort); // 
-	lua_register(m_L, "readInteger", readInteger); // 
-	lua_register(m_L, "readLong", readLong); // 
-	lua_register(m_L, "readFloat", readFloat); // 
-	lua_register(m_L, "readDouble", readDouble); // 
-	lua_register(m_L, "readString", readString); // 
-	lua_register(m_L, "readWString", readWString); // 
-	lua_register(m_L, "writeByte", writeByte); // 
-	lua_register(m_L, "writeShort", writeShort); // 
-	lua_register(m_L, "writeInteger", writeInteger); // 
-	lua_register(m_L, "writeFloat", writeFloat); // 
-	lua_register(m_L, "writeDouble", writeDouble); // 
-	lua_register(m_L, "decrypt", decrypt); // 
+	lua_register(m_L, VMProtectDecryptStringA("readByte"), readByte); // 
+	lua_register(m_L, VMProtectDecryptStringA("readShort"), readShort); // 
+	lua_register(m_L, VMProtectDecryptStringA("readInteger"), readInteger); // 
+	lua_register(m_L, VMProtectDecryptStringA("readLong"), readLong); // 
+	lua_register(m_L, VMProtectDecryptStringA("readFloat"), readFloat); // 
+	lua_register(m_L, VMProtectDecryptStringA("readDouble"), readDouble); // 
+	lua_register(m_L, VMProtectDecryptStringA("readString"), readString); // 
+	lua_register(m_L, VMProtectDecryptStringA("readWString"), readWString); // 
+	lua_register(m_L, VMProtectDecryptStringA("writeByte"), writeByte); // 
+	lua_register(m_L, VMProtectDecryptStringA("writeShort"), writeShort); // 
+	lua_register(m_L, VMProtectDecryptStringA("writeInteger"), writeInteger); // 
+	lua_register(m_L, VMProtectDecryptStringA("writeFloat"), writeFloat); // 
+	lua_register(m_L, VMProtectDecryptStringA("writeDouble"), writeDouble); // 
+	lua_register(m_L, VMProtectDecryptStringA("decrypt"), decrypt); // 
 	// winapi
-	lua_register(m_L, "findWindow", findWindow); // 
-	lua_register(m_L, "getForegroundWindow", getForegroundWindow); // 
-	lua_register(m_L, "setForegroundWindow", setForegroundWindow); // 
-	lua_register(m_L, "setWindowLong", setWindowLong); // 
-	lua_register(m_L, "outputDebugString", outputDebugString); // 
-	lua_register(m_L, "messageBox", messageBox); // 
-	lua_register(m_L, "sendMessage", sendMessage); // 
-	lua_register(m_L, "sleep", sleep); // 
-	lua_register(m_L, "getWindowRect", getWindowRect); // 
+	lua_register(m_L, VMProtectDecryptStringA("findWindow"), findWindow); // 
+	lua_register(m_L, VMProtectDecryptStringA("getForegroundWindow"), getForegroundWindow); // 
+	lua_register(m_L, VMProtectDecryptStringA("setForegroundWindow"), setForegroundWindow); // 
+	lua_register(m_L, VMProtectDecryptStringA("setWindowLong"), setWindowLong); // 
+	lua_register(m_L, VMProtectDecryptStringA("outputDebugString"), outputDebugString); // 
+	lua_register(m_L, VMProtectDecryptStringA("messageBox"), messageBox); // 
+	lua_register(m_L, VMProtectDecryptStringA("sendMessage"), sendMessage); // 
+	lua_register(m_L, VMProtectDecryptStringA("sleep"), sleep); // 
+	lua_register(m_L, VMProtectDecryptStringA("getWindowRect"), getWindowRect); // 
 	// key
-	lua_register(m_L, "keyUp", keyUp); // 
-	lua_register(m_L, "keyDown", keyDown); // 
-	lua_register(m_L, "doKeyPress", doKeyPress); // 
-	lua_register(m_L, "upAllKey", upAllKey); // 
-	lua_register(m_L, "getKeyState", getKeyState); // 
-	lua_register(m_L, "mouseClick", mouseClick); // 
-	lua_register(m_L, "mouseDoubleClick", mouseDoubleClick); // 
-	lua_register(m_L, "moveMousePos", moveMousePos); // 
-	lua_register(m_L, "setMousePos", setMousePos); // 
-	lua_register(m_L, "getMousePos", getMousePos); // luaSwitch
+	lua_register(m_L, VMProtectDecryptStringA("keyUp"), keyUp); // 
+	lua_register(m_L, VMProtectDecryptStringA("keyDown"), keyDown); // 
+	lua_register(m_L, VMProtectDecryptStringA("doKeyPress"), doKeyPress); // 
+	lua_register(m_L, VMProtectDecryptStringA("upAllKey"), upAllKey); // 
+	lua_register(m_L, VMProtectDecryptStringA("getKeyState"), getKeyState); // 
+	lua_register(m_L, VMProtectDecryptStringA("mouseClick"), mouseClick); // 
+	lua_register(m_L, VMProtectDecryptStringA("mouseDoubleClick"), mouseDoubleClick); // 
+	lua_register(m_L, VMProtectDecryptStringA("moveMousePos"), moveMousePos); // 
+	lua_register(m_L, VMProtectDecryptStringA("setMousePos"), setMousePos); // 
+	lua_register(m_L, VMProtectDecryptStringA("getMousePos"), getMousePos); // luaSwitch
 	// other
-	lua_register(m_L, "luaSwitch", luaSwitch); // 
+	lua_register(m_L, VMProtectDecryptStringA("luaSwitch"), luaSwitch); // 
 
 
 }
@@ -63,7 +63,7 @@ bool  Lua::check(int result)
 	if (result == LUA_OK) {
 		return true;
 	}
-	printf("%s\n",lua_tostring(L, -1));
+	printf(VMProtectDecryptStringA("%s\n"),lua_tostring(L, -1));
 	return false;
 }
 bool Lua::doFile(const char * filePath) {
@@ -232,16 +232,16 @@ int Lua::getWindowRect(lua_State* m_L)
 	HWND hWnd = (HWND)lua_tointeger(m_L,1);
 	GetWindowRect(hWnd,&rect);
 	lua_newtable(m_L);
-	lua_pushstring(m_L,"bottom");
+	lua_pushstring(m_L, VMProtectDecryptStringA("bottom"));
 	lua_pushinteger(m_L, rect.bottom);
 	lua_settable(m_L, -3);//弹出key,value，并设置到table里面去
-	lua_pushstring(m_L, "left");
+	lua_pushstring(m_L, VMProtectDecryptStringA("left"));
 	lua_pushinteger(m_L, rect.left);
 	lua_settable(m_L, -3);//弹出key,value，并设置到table里面去
-	lua_pushstring(m_L, "top");
+	lua_pushstring(m_L, VMProtectDecryptStringA("top"));
 	lua_pushinteger(m_L, rect.top);
 	lua_settable(m_L, -3);//弹出key,value，并设置到table里面去
-	lua_pushstring(m_L, "right");
+	lua_pushstring(m_L, VMProtectDecryptStringA("right"));
 	lua_pushinteger(m_L, rect.right);
 	lua_settable(m_L, -3);//弹出key,value，并设置到table里面去
 	return 1;

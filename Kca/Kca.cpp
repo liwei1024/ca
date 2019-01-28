@@ -190,7 +190,7 @@ BOOL Kca::getModuleInfoByModuleName(LPMODULEINFO ModuleInfo, const wchar_t *modu
 			TCHAR szModName[MAX_PATH];
 			GetModuleFileNameEx(getProcessHandle(), hMods[i], szModName, sizeof(szModName) / sizeof(TCHAR));
 			if (wcsstr(szModName, moduleName)) {
-				printf("moduleName->:%ws hmodule->:%p", szModName, hMods[i]);
+				printf(VMProtectDecryptStringA("moduleName->:%ws hmodule->:%p"), szModName, hMods[i]);
 				printf("\n");
 				return GetModuleInformation(getProcessHandle(), hMods[i], ModuleInfo, sizeof(MODULEINFO));
 			}
@@ -207,7 +207,7 @@ DWORD Kca::getProcessIdByProcessName(const wchar_t * processName)
 	pe32.dwSize = sizeof(pe32);
 	HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if (hProcessSnap == INVALID_HANDLE_VALUE) {
-		printf("CreateToolhelp32Snapshot Error!\n");
+		printf(VMProtectDecryptStringA("CreateToolhelp32Snapshot Error!\n"));
 		return 0;
 	}
 	BOOL bResult = Process32First(hProcessSnap, &pe32);

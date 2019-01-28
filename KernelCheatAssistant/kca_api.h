@@ -1,7 +1,7 @@
 #ifndef KCA_API_H
 #define KCA_API_H
-#define TARGET_PROCESS_FILE_NAME L"DNF.exe"
-#define TARGET_PROCESS_NAME L"dnf.exe"
+
+
 //#define TARGET_PROCESS_NAME L"YoudaoDict.exe"
 //#define TARGET_PROCESS_FILE_NAME L"YoudaoDict.exe"
 //#define TARGET_PROCESS_NAME L"cheatengine-x86_64.exe"

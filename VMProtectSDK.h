@@ -1,6 +1,7 @@
 #pragma once
 
-#ifdef VMP_SWITCH_ON
+#define VMP_SWITCH_ON TRUE
+#if (VMP_SWITCH_ON==TRUE)
 #if defined(__APPLE__) || defined(__unix__)
 #define VMP_IMPORT 
 #define VMP_API
@@ -10,9 +11,9 @@
 #define VMP_API __stdcall
 #define VMP_WCHAR wchar_t
 #ifdef _WIN64
-#pragma comment(lib, "./VMProtectSDK64.lib")
+#pragma comment(lib, "../VMProtectSDK64.lib")
 #else
-#pragma comment(lib, "./VMProtectSDK32.lib")
+#pragma comment(lib, "../VMProtectSDK32.lib")
 #endif // _WIN64
 #endif // __APPLE__ || __unix__
 
@@ -102,7 +103,7 @@ extern "C" {
 }
 #endif
 #else
-#define VMProtectDecryptStringA(value){value}
-#define VMProtectDecryptStringW(value){value}
+#define VMProtectDecryptStringA(value)value
+#define VMProtectDecryptStringW(value)value
 #endif
 

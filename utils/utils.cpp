@@ -282,10 +282,10 @@ std::string utils::wcharToChar(const wchar_t* wp, UINT codePage)
 
 BOOL utils::registerHotKey(int keyCode, int *pHotKeyId, UINT fsModifiers)
 {
-	*pHotKeyId = GlobalAddAtom(formatWString(L"HOT_KEY_ID_%d_%d", GetCurrentProcessId(), keyCode).c_str());
+	*pHotKeyId = GlobalAddAtom(formatWString(VMProtectDecryptStringW(L"HOT_KEY_ID_%d_%d"), GetCurrentProcessId(), keyCode).c_str());
 	//printf("keyId->:%d\n", *pHotKeyId);
 	if (RegisterHotKey(NULL, *pHotKeyId, fsModifiers, keyCode) == FALSE) {
-		printf("×¢²áÊ§°Ü\n");
+		printf(VMProtectDecryptStringA("×¢²áÊ§°Ü\n"));
 		return FALSE;
 	}
 	return TRUE;
