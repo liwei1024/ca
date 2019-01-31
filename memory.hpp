@@ -126,6 +126,7 @@ public:
 	std::vector<byte> readBytes(DWORD_PTR dwBaseAddress, SIZE_T Size)
 	{
 		std::vector<byte> bytes;
+		bytes.resize(Size);
 		byte * buffer = new byte[Size];
 		instance.readVirtualMemory((ULONG)dwBaseAddress, buffer, Size);
 		for (size_t i = 0; i < Size; i++)
