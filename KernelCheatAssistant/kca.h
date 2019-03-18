@@ -5,6 +5,7 @@
 #include <ntddk.h>
 #include <ntstrsafe.h>
 #include <wdm.h>
+//#include "VMProtectDDK.h"
 #include "kca_api.h"
 #include "hide.h"
 #define TARGET_PROCESS_FILE_NAME L"DNF.exe"
@@ -153,3 +154,5 @@ BOOLEAN PathModification(HANDLE pid);//Î±×°³ÌÐòÂ·¾¶
 #endif
 
 #endif // !KCA_H
+
+

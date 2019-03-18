@@ -12,6 +12,14 @@ typedef struct _MAP_OBJECT_STRUCT
 	int z;
 }MAP_OBJECT_STRUCT,*PMAP_OBJECT_STRUCT;
 
+
+struct Map
+{
+	unsigned int object_count = 10;
+
+
+};
+
 namespace status_3
 {
 	void manage();

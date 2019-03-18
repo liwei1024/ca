@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ksocket\berkeley.c">
+      <Filter>ksocket</Filter>
+    </ClCompile>
+    <ClCompile Include="ksocket\ksocket.c">
+      <Filter>ksocket</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ksocket">
+      <UniqueIdentifier>{aaa3df88-c281-4a51-8087-d1814fa6c4d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ksocket\berkeley.h">
+      <Filter>ksocket</Filter>
+    </ClInclude>
+    <ClInclude Include="ksocket\ksocket.h">
+      <Filter>ksocket</Filter>
+    </ClInclude>
+    <ClInclude Include="ksocket\stdint.h">
+      <Filter>ksocket</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h" />
+  </ItemGroup>
+</Project>
