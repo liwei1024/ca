@@ -74,5 +74,8 @@
     <ClInclude Include="set_protection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VMProtectDDK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
