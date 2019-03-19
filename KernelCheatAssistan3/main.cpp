@@ -27,6 +27,11 @@ namespace Global {
 	PEPROCESS TargetProcess;
 	NTSTATUS TargetProcessStatus; //0 退出 1运行中
 	HANDLE TargetProcessId;
+	SOCKET ListenSocket;
+	SOCKET ClientSocket;
+	bool ThreadSwitch = true;
+	KEVENT g_kEvent_t1;
+	KEVENT g_kEvent_t2;
 }
 
 namespace Socket {
@@ -86,8 +91,7 @@ NTSTATUS DriverEntry(
 		return STATUS_UNSUCCESSFUL;
 	}
 
-	DriverObject->DriverUnload = Driver::DriverUnload;
-
+	KeInitializeEvent(&Global::g_kEvent_t1, SynchronizationEvent, FALSE);
 	Status = PsCreateSystemThread(
 		&thread_handle,
 		GENERIC_ALL,
@@ -97,14 +101,14 @@ NTSTATUS DriverEntry(
 		Socket::ServerThread,
 		nullptr
 	);
-
 	if (!NT_SUCCESS(Status))
 	{
 		//dprintf("Failed to create server thread. Status code: %X.", status);
 		return STATUS_UNSUCCESSFUL;
 	}
-
 	ZwClose(thread_handle);
+
+	DriverObject->DriverUnload = Driver::DriverUnload;
 	return Status;
 }
 
@@ -117,6 +121,25 @@ VOID Driver::DriverUnload(
 	PsRemoveLoadImageNotifyRoutine(Notify::NotifyImageLoadCallback);
 
 	PsSetCreateProcessNotifyRoutineEx(Notify::CreateProcessNotifyEx, TRUE);
+
+	Global::ThreadSwitch = false;
+
+	closesocket(Global::ClientSocket); 
+	KeWaitForSingleObject(
+		&Global::g_kEvent_t2,
+		Executive,
+		KernelMode,
+		FALSE,
+		0         //再内核层的等待函数，0是永久等待
+	);
+	closesocket(Global::ListenSocket);
+	KeWaitForSingleObject(
+		&Global::g_kEvent_t1,
+		Executive,
+		KernelMode,
+		FALSE,
+		0         //再内核层的等待函数，0是永久等待
+	);
 }
 
 void NTAPI Socket::ServerThread(void*)
@@ -124,28 +147,28 @@ void NTAPI Socket::ServerThread(void*)
 	NTSTATUS Status = KsInitialize();
 	if (!NT_SUCCESS(Status))
 	{
-		//dprintf("Failed to initialize KSOCKET. Status code: %X.", Status);
+		dprintf("Failed to initialize KSOCKET. Status code: %X.", Status);
 		return;
 	}
 
 
-	SOCKET listen_socket = Socket::CreateListenSocket();
-	if (listen_socket == INVALID_SOCKET)
+	Global::ListenSocket = Socket::CreateListenSocket();
+	if (Global::ListenSocket == INVALID_SOCKET)
 	{
-		//dprintf("Failed to initialize listening socket.");
+		dprintf("Failed to initialize listening socket.");
 		KsDestroy();
 		return;
 	}
 
-	while (true)
+	while (Global::ThreadSwitch)
 	{
 		sockaddr  socket_addr{ };
 		socklen_t socket_length{ };
 
-		const auto client_connection = accept(listen_socket, &socket_addr, &socket_length);
+		const auto client_connection = accept(Global::ListenSocket, &socket_addr, &socket_length);
 		if (client_connection == INVALID_SOCKET)
 		{
-			//dprintf("Failed to accept client connection.");
+			dprintf("Failed to accept client connection.");
 			break;
 		}
 
@@ -153,6 +176,7 @@ void NTAPI Socket::ServerThread(void*)
 
 		// Create a thread that will handle connection with client.
 		// TODO: Limit number of threads.
+		KeInitializeEvent(&Global::g_kEvent_t2, SynchronizationEvent, FALSE);
 		Status = PsCreateSystemThread(
 			&thread_handle,
 			GENERIC_ALL,
@@ -165,7 +189,7 @@ void NTAPI Socket::ServerThread(void*)
 
 		if (!NT_SUCCESS(Status))
 		{
-			//dprintf("Failed to create thread for handling client connection.");
+			dprintf("Failed to create thread for handling client connection.");
 			closesocket(client_connection);
 			break;
 		}
@@ -173,10 +197,13 @@ void NTAPI Socket::ServerThread(void*)
 		ZwClose(thread_handle);
 	}
 
-	closesocket(listen_socket);
+	//closesocket(Global::ListenSocket);
+	KeSetEvent(&Global::g_kEvent_t1, 0, TRUE);
+	PsTerminateSystemThread(STATUS_SUCCESS);
 
 }
 
+// 创建监听socket
 SOCKET Socket::CreateListenSocket()
 {
 	SOCKADDR_IN address{ };
@@ -187,36 +214,36 @@ SOCKET Socket::CreateListenSocket()
 	SOCKET listen_socket = socket_listen(AF_INET, SOCK_STREAM, 0);
 	if (listen_socket == INVALID_SOCKET)
 	{
-		//dprintf("Failed to create listen socket.");
+		dprintf("Failed to create listen socket.");
 		return INVALID_SOCKET;
 	}
 
 	if (bind(listen_socket, (SOCKADDR*)&address, sizeof(address)) == SOCKET_ERROR)
 	{
-		//dprintf("Failed to bind socket.");
+		dprintf("Failed to bind socket.");
 		closesocket(listen_socket);
 		return INVALID_SOCKET;
 	}
 
 	if (listen(listen_socket, 10) == SOCKET_ERROR)
 	{
-		//dprintf("Failed to set socket mode to listening.");
+		dprintf("Failed to set socket mode to listening.");
 		closesocket(listen_socket);
 		return INVALID_SOCKET;
 	}
 
 	return listen_socket;
 }
-
+// socket 链接分发处理
 void NTAPI Socket::ConnectionThread(void* connection_socket) 
 {
-	const SOCKET client_connection = SOCKET(ULONG_PTR(connection_socket));
+	Global::ClientSocket = SOCKET(ULONG_PTR(connection_socket));
 
 	Packet packet = {};
 
-	while (true)
+	while (Global::ThreadSwitch)
 	{
-		int result = ::recv(client_connection,&packet,sizeof(packet),0);
+		int result = ::recv(Global::ClientSocket,&packet,sizeof(packet),0);
 		if (result <= 0)
 			break;
 
@@ -225,10 +252,13 @@ void NTAPI Socket::ConnectionThread(void* connection_socket)
 
 		if (packet.header.verify_code != verify_code)
 			continue;
-		if (!Socket::PacketCompleted(client_connection, Socket::PacketDispose(client_connection, packet)))
+		if (!Socket::PacketCompleted(Global::ClientSocket, Socket::PacketDispose(Global::ClientSocket, packet))) {
+			dprintf("fail !!!!!!!!!!!!!!!!!");
 			break;
+		}
 	}
-
+	KeSetEvent(&Global::g_kEvent_t2, 0, TRUE);
+	PsTerminateSystemThread(STATUS_SUCCESS);
 }
 
 NTSTATUS Socket::PacketDispose(const SOCKET connection_socket, Packet packet)
@@ -240,12 +270,12 @@ NTSTATUS Socket::PacketDispose(const SOCKET connection_socket, Packet packet)
 		Status = Fun::ReadMemory(connection_socket, packet.data.read_memory);
 		break;
 	case PacketType::packet_get_target_process_status:
-		Status = send(connection_socket,&Global::TargetProcessStatus,sizeof(Global::TargetProcessStatus),0);
+		Status = send(connection_socket,&Global::TargetProcessStatus,sizeof(Global::TargetProcessStatus),0)!= SOCKET_ERROR;
 		break;
 	default:
 		break;
 	}
-	return Status;
+	return NTSTATUS(Status);
 }
 
 bool Socket::PacketCompleted(const SOCKET client_connection, NTSTATUS result)
@@ -267,9 +297,11 @@ VOID Notify::CreateProcessNotifyEx(
 {
 	if (NULL != CreateInfo)
 	{
-		if (wcsstr(CreateInfo->ImageFileName->Buffer, L"dnf.exe"))
+		if (wcsstr(CreateInfo->ImageFileName->Buffer, L"YoudaoDict.exe"))
 		{
+			dprintf("进程已经启动");
 			Global::TargetProcess = Process;
+			Global::TargetProcessId = ProcessId;
 			Global::TargetProcessStatus = 1;
 		}
 		
@@ -306,6 +338,7 @@ NTSTATUS Fun::ReadMemory(const SOCKET client_connection, PacketReadMemory packet
 	NTSTATUS Status = STATUS_SUCCESS;
 
 	PVOID  Buffer = ExAllocatePool(NonPagedPool,packet.size);
+	RtlZeroMemory(Buffer, packet.size);
 	SIZE_T ReturnSize = 0;
 
 	Status = MmCopyVirtualMemory(
